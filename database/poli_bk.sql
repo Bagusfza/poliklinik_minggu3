@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2024 at 02:08 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 7.3.28
+-- Waktu pembuatan: 06 Jan 2024 pada 08.44
+-- Versi server: 10.4.18-MariaDB
+-- Versi PHP: 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `daftar_poli`
+-- Struktur dari tabel `daftar_poli`
 --
 
 CREATE TABLE `daftar_poli` (
@@ -37,7 +37,7 @@ CREATE TABLE `daftar_poli` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `daftar_poli`
+-- Dumping data untuk tabel `daftar_poli`
 --
 
 INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antrian`, `status_periksa`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antria
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_periksa`
+-- Struktur dari tabel `detail_periksa`
 --
 
 CREATE TABLE `detail_periksa` (
@@ -58,7 +58,7 @@ CREATE TABLE `detail_periksa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `detail_periksa`
+-- Dumping data untuk tabel `detail_periksa`
 --
 
 INSERT INTO `detail_periksa` (`id`, `id_periksa`, `id_obat`) VALUES
@@ -68,7 +68,7 @@ INSERT INTO `detail_periksa` (`id`, `id_periksa`, `id_obat`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dokter`
+-- Struktur dari tabel `dokter`
 --
 
 CREATE TABLE `dokter` (
@@ -81,7 +81,7 @@ CREATE TABLE `dokter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `dokter`
+-- Dumping data untuk tabel `dokter`
 --
 
 INSERT INTO `dokter` (`id`, `nama`, `password`, `alamat`, `no_hp`, `id_poli`) VALUES
@@ -94,7 +94,7 @@ INSERT INTO `dokter` (`id`, `nama`, `password`, `alamat`, `no_hp`, `id_poli`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal_periksa`
+-- Struktur dari tabel `jadwal_periksa`
 --
 
 CREATE TABLE `jadwal_periksa` (
@@ -102,23 +102,25 @@ CREATE TABLE `jadwal_periksa` (
   `id_dokter` int(11) NOT NULL,
   `hari` enum('Senin','Selasa','Rabu','Kamis','Jumat','Sabtu') NOT NULL,
   `jam_mulai` time NOT NULL,
-  `jam_selesai` time NOT NULL
+  `jam_selesai` time NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `jadwal_periksa`
+-- Dumping data untuk tabel `jadwal_periksa`
 --
 
-INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_selesai`) VALUES
-(1, 1, 'Rabu', '15:00:00', '16:00:00'),
-(2, 2, 'Kamis', '12:00:00', '14:00:00'),
-(3, 4, 'Senin', '13:00:00', '14:00:00'),
-(4, 6, 'Rabu', '09:00:00', '15:00:00');
+INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_selesai`, `status`) VALUES
+(3, 4, 'Senin', '13:00:00', '14:00:00', 0),
+(4, 6, 'Kamis', '09:00:00', '15:00:00', 0),
+(10, 6, 'Senin', '16:36:00', '20:36:00', 1),
+(11, 6, 'Senin', '10:30:00', '15:00:00', 1),
+(12, 6, 'Sabtu', '08:30:00', '15:00:00', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `obat`
+-- Struktur dari tabel `obat`
 --
 
 CREATE TABLE `obat` (
@@ -129,19 +131,18 @@ CREATE TABLE `obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `obat`
+-- Dumping data untuk tabel `obat`
 --
 
 INSERT INTO `obat` (`id`, `nama_obat`, `kemasan`, `harga`) VALUES
 (1, 'OBH Herbal', 'Ktk 10 btl @ 10 ml', 6000),
 (2, 'Paramex', 'Tablet', 8000),
-(3, 'Aminofilin injeksi 24 mg/ml', 'ktk 10 x 10 tablet', 118000),
-(4, 'Asam Folat tablet 5 mg', 'btl 1000 tablet', 62000);
+(3, 'Aminofilin injeksi 24 mg/ml', 'ktk 10 x 10 tablet', 118000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pasien`
+-- Struktur dari tabel `pasien`
 --
 
 CREATE TABLE `pasien` (
@@ -155,7 +156,7 @@ CREATE TABLE `pasien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pasien`
+-- Dumping data untuk tabel `pasien`
 --
 
 INSERT INTO `pasien` (`id`, `nama`, `password`, `alamat`, `no_ktp`, `no_hp`, `no_rm`) VALUES
@@ -167,7 +168,7 @@ INSERT INTO `pasien` (`id`, `nama`, `password`, `alamat`, `no_ktp`, `no_hp`, `no
 -- --------------------------------------------------------
 
 --
--- Table structure for table `periksa`
+-- Struktur dari tabel `periksa`
 --
 
 CREATE TABLE `periksa` (
@@ -179,7 +180,7 @@ CREATE TABLE `periksa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `periksa`
+-- Dumping data untuk tabel `periksa`
 --
 
 INSERT INTO `periksa` (`id`, `id_daftar_poli`, `tgl_periksa`, `catatan`, `biaya_periksa`) VALUES
@@ -189,7 +190,7 @@ INSERT INTO `periksa` (`id`, `id_daftar_poli`, `tgl_periksa`, `catatan`, `biaya_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `poli`
+-- Struktur dari tabel `poli`
 --
 
 CREATE TABLE `poli` (
@@ -199,7 +200,7 @@ CREATE TABLE `poli` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `poli`
+-- Dumping data untuk tabel `poli`
 --
 
 INSERT INTO `poli` (`id`, `nama_poli`, `keterangan`) VALUES
@@ -215,7 +216,7 @@ INSERT INTO `poli` (`id`, `nama_poli`, `keterangan`) VALUES
 --
 
 --
--- Indexes for table `daftar_poli`
+-- Indeks untuk tabel `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
   ADD PRIMARY KEY (`id`),
@@ -223,7 +224,7 @@ ALTER TABLE `daftar_poli`
   ADD KEY `fk_daftarPoli_pasien` (`id_pasien`);
 
 --
--- Indexes for table `detail_periksa`
+-- Indeks untuk tabel `detail_periksa`
 --
 ALTER TABLE `detail_periksa`
   ADD PRIMARY KEY (`id`),
@@ -231,128 +232,128 @@ ALTER TABLE `detail_periksa`
   ADD KEY `fk_detailPeriksa_obat` (`id_obat`);
 
 --
--- Indexes for table `dokter`
+-- Indeks untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_dokter_poli` (`id_poli`);
 
 --
--- Indexes for table `jadwal_periksa`
+-- Indeks untuk tabel `jadwal_periksa`
 --
 ALTER TABLE `jadwal_periksa`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_jadwal_dokter` (`id_dokter`);
 
 --
--- Indexes for table `obat`
+-- Indeks untuk tabel `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pasien`
+-- Indeks untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `periksa`
+-- Indeks untuk tabel `periksa`
 --
 ALTER TABLE `periksa`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_periksa_daftarPoli` (`id_daftar_poli`);
 
 --
--- Indexes for table `poli`
+-- Indeks untuk tabel `poli`
 --
 ALTER TABLE `poli`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `daftar_poli`
+-- AUTO_INCREMENT untuk tabel `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `detail_periksa`
+-- AUTO_INCREMENT untuk tabel `detail_periksa`
 --
 ALTER TABLE `detail_periksa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `dokter`
+-- AUTO_INCREMENT untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `jadwal_periksa`
+-- AUTO_INCREMENT untuk tabel `jadwal_periksa`
 --
 ALTER TABLE `jadwal_periksa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `obat`
+-- AUTO_INCREMENT untuk tabel `obat`
 --
 ALTER TABLE `obat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `pasien`
+-- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `periksa`
+-- AUTO_INCREMENT untuk tabel `periksa`
 --
 ALTER TABLE `periksa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `poli`
+-- AUTO_INCREMENT untuk tabel `poli`
 --
 ALTER TABLE `poli`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `daftar_poli`
+-- Ketidakleluasaan untuk tabel `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
   ADD CONSTRAINT `fk_daftarPoli_jadwal` FOREIGN KEY (`id_jadwal`) REFERENCES `jadwal_periksa` (`id`),
   ADD CONSTRAINT `fk_daftarPoli_pasien` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id`);
 
 --
--- Constraints for table `detail_periksa`
+-- Ketidakleluasaan untuk tabel `detail_periksa`
 --
 ALTER TABLE `detail_periksa`
   ADD CONSTRAINT `fk_detailPeriksa_obat` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id`),
   ADD CONSTRAINT `fk_detailPeriksa_periksa` FOREIGN KEY (`id_periksa`) REFERENCES `periksa` (`id`);
 
 --
--- Constraints for table `dokter`
+-- Ketidakleluasaan untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   ADD CONSTRAINT `fk_dokter_poli` FOREIGN KEY (`id_poli`) REFERENCES `poli` (`id`);
 
 --
--- Constraints for table `jadwal_periksa`
+-- Ketidakleluasaan untuk tabel `jadwal_periksa`
 --
 ALTER TABLE `jadwal_periksa`
   ADD CONSTRAINT `fk_jadwal_dokter` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id`);
 
 --
--- Constraints for table `periksa`
+-- Ketidakleluasaan untuk tabel `periksa`
 --
 ALTER TABLE `periksa`
   ADD CONSTRAINT `fk_periksa_daftarPoli` FOREIGN KEY (`id_daftar_poli`) REFERENCES `daftar_poli` (`id`);
